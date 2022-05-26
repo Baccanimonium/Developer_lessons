@@ -29,3 +29,8 @@
 
 /back/.idea
 /front/.idea
+.idea
+
+
+.database
+logs_nginx
