@@ -1,0 +1,57 @@
+version: "3.4"
+services:
+  postgres:
+    image: postgres:12
+    restart: always
+    networks:
+      - api-server-network
+    volumes:
+      - ./.database/postgres/data:/var/lib/postgresql/data
+    ports:
+      - "5428:5428"
+    environment:
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_DATABASE}
+    command: -p 5428
+    env_file:
+      - ./.env
+  web:
+    build:
+      dockerfile: Dockerfile.back
+      context: .
+    restart: always
+    volumes:
+      - ./back/files:/usr/src/app/files
+    ports:
+      - "3030:3030"
+    links:
+      - postgres:postgres
+    depends_on:
+      - postgres
+    networks:
+      - api-server-network
+    env_file:
+      - ./.env
+
+  nginx:
+    container_name: nginx
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    restart: always
+    ports:
+      - "80:80"
+#        - "443:443" включить если появиться https
+    # монтируем директории, слева директории на основной машине, справа - куда они монтируются в контейнере
+    volumes:
+      - ./back/files:/files
+      - ./logs_nginx:/var/log/nginx
+    networks:
+      - api-server-network
+    depends_on:
+      - web
+
+networks:
+  api-server-network:
+    driver: bridge

@@ -1,0 +1,26 @@
+{
+  "name": "front_first_lection_back_master",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "NODE_ENV=development nodemon index.js",
+    "migrations:up": "knex migrate:latest",
+    "migrations:down": "knex migrate:down",
+    "seed": "knex seed:run"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@fastify/cors": "^7.0.0",
+    "dotenv": "^16.0.0",
+    "fastify": "^3.27.1",
+    "fastify-file-upload": "4.0.0",
+    "knex": "^1.0.3",
+    "pg": "^8.7.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  }
+}

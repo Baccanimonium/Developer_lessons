@@ -1,0 +1,12 @@
+/front/node_modules
+/front/build
+/front/npm-debug.log
+/back/node_modules
+/back/npm-debug.log
+/back/files
+.database
+logs_nginx
+img.png
+img_1.png
+img_2.png
+Readme.md
