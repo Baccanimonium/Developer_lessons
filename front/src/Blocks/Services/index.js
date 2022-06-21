@@ -20,7 +20,7 @@ const Services = () => {
     // загружаем наши сервисы
     // самовызывающася асинхронная функция
     (async () => {
-      const { data } = await axios.get('http://localhost/api/services')
+      const { data } = await axios.get('api/services')
       setServices(data)
     })()
     // запуститься 1 раз, т.к у нее вторым аргументом передан пустой массив
@@ -36,8 +36,8 @@ const Services = () => {
     for (const file of refFileInput.current.files) {
       FData.append(file.name, file, file.name) // добавляем файцы в цикле, их может быть неограниченное количество
     }
-    const { data:[image] } = await axios.post('http://localhost/api/upload/services', FData) // отправляем файлы на сервер
-    const { data } = await axios.post('http://localhost/api/services', {
+    const { data:[image] } = await axios.post('api/upload/services', FData) // отправляем файлы на сервер
+    const { data } = await axios.post('api/services', {
       title: newServiceTitle,
       image
     }) // создаем новый сервис
@@ -82,7 +82,14 @@ const Services = () => {
             key={id}
             className="flex flex-col"
           >
-            <ServiceImage src={image}/>
+            <ServiceImage
+              src={image}
+              onError={({ currentTarget }) => {
+                currentTarget.onerror = null; // prevents looping
+                currentTarget.src="./firstService.png"
+              }}
+              alt="на тестовом стенде нету картинок"
+            />
             <ServiceTitle className="mt-5">
               {title}
             </ServiceTitle>

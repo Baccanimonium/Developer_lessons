@@ -3,7 +3,10 @@ const fileUpload = require('fastify-file-upload')
 const cors = require("@fastify/cors");
 const { createDbConnection } = require("./createDbConnection");
 const { initHandlers } = require("./Handlers");
-// require("dotenv").config({path: '../.env'});
+
+if (process.env.NODE_ENV === "development") {
+  require("dotenv").config({path: '../.env'});
+}
 
 // Создаем функцию и тут же ее запускам, очень важный момент - ее синтаксиc выглядит как (() => {})() это самовызывающаяся функция
 (async () => {
@@ -12,7 +15,7 @@ const { initHandlers } = require("./Handlers");
     dbConnection: process.env.DB_CONNECTION,
     database: process.env.DB_DATABASE,
     user: process.env.DB_USERNAME,
-    host: process.env.DB_HOST,
+    host: process.env.NODE_ENV === "development" ? "localhost" : process.env.DB_HOST,
     password: process.env.DB_PASSWORD,
     port: process.env.DB_PORT,
     ssl: process.env.DB_SSL
@@ -35,9 +38,13 @@ const { initHandlers } = require("./Handlers");
   app.register(handlers.files,  { prefix: "/api" });
 
   try {
-    // await app.listen(process.env.PORT) // docker-less start
     // запускаем наше приложение
-    await app.listen(process.env.PORT, '0.0.0.0')
+    if (process.env.NODE_ENV === "development") {
+      // docker-less start
+      await app.listen(3030)
+    } else {
+      await app.listen(process.env.PORT, '0.0.0.0')
+    }
   } catch (err) {
     // в случаее ошибки выводим ошибку в консоль и завершаем процесс
     app.log.error(err)

@@ -66,6 +66,7 @@ const FormBlock = () => {
       <Form className="mt-10" onSubmit={onSubmit}>
         {formConfig.map(({ id, placeholder, component: Comp }) => (
           <Comp
+            key={id}
             // везде идет выборка по id т.к. мы работаем с объектами(множествами)
             id={id}
             // условие ошибки, если нажимали и если вышли из поля или форма нажата и данных нет
