@@ -1,8 +1,8 @@
 # Команда запуска всего приложения: "docker-compose up --build"
 ## Запуск приложения после создания проекта из репозитория
+* docker-compose up --build
 * npm install knex -g
 * В back/package.json запускаем migrations:up и seed
-* docker-compose up --build
 ## Подготовка к участию в уроке
  * Вам понадобится одна из IDE https://www.jetbrains.com/ru-ru/webstorm/download или https://visualstudio.microsoft.com/ru/ все примеры будут показанны в Webstorm
  * Nodejs Для запуска Javascript https://nodejs.org/en/
