@@ -47,6 +47,7 @@ TextArea.propTypes = {
   className: PropTypes.string,
   children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
   ShowInputFillIndicator: PropTypes.bool,
+  autoComplete: PropTypes.string,
 };
 
 TextArea.defaultProps = {

@@ -24,7 +24,7 @@ services:
     volumes:
       - ./back/files:/usr/src/app/files
     ports:
-      - "3030:3030"
+      - "9000:9000"
     links:
       - postgres:postgres
     depends_on:
